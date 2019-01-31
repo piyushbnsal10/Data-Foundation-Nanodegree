@@ -1,0 +1,45 @@
+Ques1: The peolpe from countries which spent maximum money on music labels
+
+select Customer.Country,sum(Invoice.Total) as total from Customer
+Inner join Invoice on Customer.CustomerId=Invoice.CustomerId
+group by Customer.Country
+Order by total desc
+LIMIT 10;
+
+ Ques2:Top 10 artist on which Customer spent most of thier money
+
+Select Artist.Name,sum(InvoiceLine.UnitPrice)as sum1 from Artist
+Inner join Album on Album.ArtistId=Artist.ArtistId
+Inner join Track on Track.AlbumId=Album.AlbumId
+Inner join InvoiceLine on InvoiceLine.TrackId=Track.TrackId
+Group by Artist.Name
+Order by sum1 desc
+Limit 10;
+
+Ques3: Artist with most number of songs
+
+Select Artist.ArtistId,Artist.Name, count(*) as Songs from Artist 
+Inner Join Album on Artist.ArtistId=Album.ArtistId
+Inner Join Track on Album.AlbumId=Track.AlbumId
+Inner Join Genre on Track.GenreId=Genre.GenreId
+where Genre.GenreId=1 
+Group by Artist.name
+Order by Songs DESC
+Limit 10;
+
+Ques4:People from different Countries on which money is spent on Top Most Artist
+
+Select Artist.Name,sum(InvoiceLine.UnitPrice)as sum1,Customer.CustomerId,Customer.FirstName,Customer.LastName,Customer.Country from Artist
+Inner join Album on Album.ArtistId=Artist.ArtistId
+Inner join Track on Track.AlbumId=Album.AlbumId
+Inner join InvoiceLine on InvoiceLine.TrackId=Track.TrackId
+Inner join Invoice on InvoiceLine.InvoiceId=Invoice.InvoiceId
+Inner join Customer on Customer.CustomerId=Invoice.CustomerId
+where Artist.Name='Iron Maiden'
+Group by Customer.CustomerId
+order by sum1 DESC
+LIMIT 6;
+
+
+
+
